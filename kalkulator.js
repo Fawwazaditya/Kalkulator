@@ -3,7 +3,7 @@ let operator = null;
 let nomerkedua = "";
 
 function updatedisplay() {
-  // Perbaiki tampilan agar tidak menampilkan angka kedua (nomerawal) jika belum diinput
+  
   let displayContent = "";
 
   if (nomerkedua !== "") {
@@ -14,7 +14,7 @@ function updatedisplay() {
     displayContent += ` ${operator} `;
   }
 
-  // Hanya tampilkan angka kedua jika user sudah mengetik sesuatu
+ 
   if (nomerawal !== "0" || operator === null) {
     displayContent += nomerawal;
   }
@@ -69,10 +69,23 @@ function calculate() {
 }
 
 function backspace() {
-  if (nomerawal.length > 1) {
-    nomerawal = nomerawal.slice(0, -1);
-  } else {
-    nomerawal = "0";
+
+  if (nomerawal !== "" ) {
+    if (nomerawal.length > 1) {
+      nomerawal = nomerawal.slice(0, -1);
+    } else {
+      nomerawal = "0";
+    }
+  } else if (operator !== null) {
+    
+    operator = null;
+  } else if (nomerkedua !== "") {
+    
+    if (nomerkedua.length > 1) {
+      nomerkedua = nomerkedua.slice(0, -1);
+    } else {
+      nomerkedua = "0";
+    }
   }
   updatedisplay();
 }
