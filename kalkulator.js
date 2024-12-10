@@ -3,19 +3,23 @@ let operator = null;
 let nomerkedua = "";
 
 function updatedisplay() {
+  // Perbaiki tampilan agar tidak menampilkan angka kedua (nomerawal) jika belum diinput
   let displayContent = "";
 
-  if (nomerkedua !== null) {
-    displayContent += nomerkedua; 
+  if (nomerkedua !== "") {
+    displayContent += nomerkedua;
   }
 
   if (operator !== null) {
-    displayContent += ` ${operator} `; 
+    displayContent += ` ${operator} `;
   }
 
-  displayContent += nomerawal;
+  // Hanya tampilkan angka kedua jika user sudah mengetik sesuatu
+  if (nomerawal !== "0" || operator === null) {
+    displayContent += nomerawal;
+  }
 
-  document.querySelector(".display").innerText = displayContent; 
+  document.querySelector(".display").innerText = displayContent;
 }
 
 function inputNumber(number) {
@@ -28,19 +32,17 @@ function inputNumber(number) {
 }
 
 function setOperator(op) {
-  if (nomerawal == "0" && !nomerkedua == NaN) return;
-  if (!nomerkedua == null) {
-    calculate;
-  }
   operator = op;
   nomerkedua = nomerawal;
-  nomerawal = "0";
+  nomerawal = "";
+  updatedisplay();
 }
-function calculate() {
-  if (!operator || nomerkedua === null) return;
 
-  let num1 = parseFloat(nomerawal);
-  let num2 = parseFloat(nomerkedua);
+function calculate() {
+  if (!operator && nomerkedua === "") return;
+
+  let num1 = parseFloat(nomerkedua);
+  let num2 = parseFloat(nomerawal || "0");
 
   let result = 0;
   switch (operator) {
@@ -59,10 +61,9 @@ function calculate() {
     default:
       return;
   }
-  result = Math.abs(result);
 
   nomerawal = result.toString();
-  nomerkedua = null;
+  nomerkedua = "";
   operator = null;
   updatedisplay();
 }
